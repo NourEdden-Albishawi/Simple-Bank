@@ -8,6 +8,7 @@ public class SavingAccount implements IAccount {
     private int balance;
     private final double interestRate = 0.06;
     private final int years;
+
     public SavingAccount(UUID id, String holder, int balance, int years) {
         this.id = id;
         this.holder = holder;
@@ -27,32 +28,38 @@ public class SavingAccount implements IAccount {
 
     @Override
     public int setBalance(int amount) {
-        return 0;
-    }
-
-    @Override
-    public int getBalance() {
-        if(balance>= 100&& balance < 20000){
-            return setBalance(balance);
+        if (balance >= 100 && balance < 20000) {
+            return balance = amount;
         }
-        return getBalance();
-    }
-
-    @Override
-    public int withdraw(int amount) {
-        if(amount >= 5 && balance> amount){
-            return withdraw(amount);
-        }
-        System.out.println("");
         return balance;
     }
 
     @Override
-    public int deposit(int amount) {
-        return deposit(amount);
+    public int getBalance() {
+        return balance;
     }
 
-    public double calculateInterest(){
+    @Override
+    public int withdraw(int amount) {
+        if (amount > 5 && balance > amount) {
+            return balance = -amount;
+        } else {
+            System.out.println("Invalid amount");
+            return balance;
+        }
+    }
+
+    @Override
+    public int deposit(int amount) {
+        if (amount > 5 && balance > amount) {
+            return balance = +amount;
+        } else {
+            System.out.println("Invalid amount");
+            return balance;
+        }
+    }
+
+    public double calculateInterest() {
         return years * balance * interestRate;
     }
 }

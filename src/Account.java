@@ -33,7 +33,7 @@ public class Account implements IAccount {
     @Override
     public int withdraw(int amount) {
         if (amount > 5 && balance > amount) {
-            return balance = +amount;
+            return balance = -amount;
         } else {
             System.out.println("Invalid amount");
             return balance;
@@ -43,7 +43,7 @@ public class Account implements IAccount {
     @Override
     public int deposit(int amount) {
         if (amount > 5 && balance > amount) {
-            return balance = -amount;
+            return balance = +amount;
         } else {
             System.out.println("Invalid amount");
             return balance;

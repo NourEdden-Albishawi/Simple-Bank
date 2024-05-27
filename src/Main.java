@@ -24,60 +24,108 @@ public class Main {
         while (true) {
             if (input == 1) {
                 createAccount();
+                break;
             } else if (input == 2) {
                 checkBalance();
+                break;
             } else if (input == 3) {
                 depositBalance();
+                break;
             } else if (input == 4) {
                 withdrawBalance();
+                break;
             } else if (input == 5) {
-                System.out.println("Your interests value is: " + calculateIntersts((SavingAccount) savingAccount));
+                calculateInterst((SavingAccount) savingAccount);
+                break;
             } else {
                 checkInput();
             }
-
         }
     }
 
-    private static double calculateIntersts(SavingAccount account) {
-        if (savingAccount == null) {
-            System.out.println("You have not created an saving account yet!");
+    private static void createAccount() {
+        System.out.print("Please enter your name: ");
+        String name = scanner.next();
+        System.out.print("\nPlease enter your balance: ");
+        int balance = scanner.nextInt();
+
+        System.out.println("\nPlease select the account type");
+        System.out.println("1. Normal Account");
+        System.out.println("2. Saving Account");
+        System.out.println("3. Child Account\n");
+        int input = scanner.nextInt();
+        if (input == 1) {
+            if(normalAccount == null){
+                normalAccount = new Account(UUID.randomUUID(), name, balance);
+                System.out.println("Account created successfully");
+                checkInput();
+            }else{
+                System.out.println("You already have an account with this type.");
+            }
+
+        }else if (input == 2) {
+            if(savingAccount == null) {
+                System.out.println("Saving account type has been selected.");
+
+                System.out.println("Please enter how many years do you want the interest to continue");
+                int years = scanner.nextInt();
+                savingAccount = new SavingAccount(UUID.randomUUID(), name, balance, years);
+                System.out.println("Account created successfully");
+                checkInput();
+            }else{
+                System.out.println("You already have an account with this type.");
+            }
+        }else if (input == 3) {
+            if(childAccount == null) {
+                System.out.println("Please enter the child's name");
+                String child = scanner.next();
+                System.out.println("Please enter the maximum withdraw balance");
+                int maximumWithdraw = scanner.nextInt();
+                childAccount = new ChildAccount(UUID.randomUUID(), name, child, balance, maximumWithdraw);
+                System.out.println("Account created successfully");
+                checkInput();
+            }else{
+                System.out.println("You already have an account with this type.");
+            }
+        } else {
             checkInput();
         }
-        return account.calculateInterest();
+
     }
 
-
     private static void checkBalance() {
+        System.out.println("============================");
         System.out.println("Please choose an account:");
         System.out.println("1. Normal Account");
         System.out.println("2. Savings Account");
         System.out.println("3. Child Account");
+        System.out.println("============================");
+
         int input = scanner.nextInt();
 
         if (input == 1) {
             if (normalAccount != null) {
-                System.out.println("Your balance is: " + normalAccount.getBalance());
+                System.out.println("Your normal account balance is: " + normalAccount.getBalance());
                 checkInput();
-            }else {
+            } else {
                 System.out.println("You have not created a normal account yet!");
                 checkInput();
             }
         }
         if (input == 2) {
             if (savingAccount != null) {
-                System.out.println("Your balance is: " + savingAccount.getBalance());
+                System.out.println("Your saving account balance is: " + savingAccount.getBalance());
                 checkInput();
-            }else {
+            } else {
                 System.out.println("You have not created an saving account yet!");
                 checkInput();
             }
         }
         if (input == 3) {
-            if (childAccount == null) {
-                System.out.println("Your balance is: " + childAccount.getBalance());
+            if (childAccount != null) {
+                System.out.println("Your child account balance is: " + childAccount.getBalance());
                 checkInput();
-            }else {
+            } else {
                 System.out.println("You have not created a child account yet!");
                 checkInput();
             }
@@ -87,44 +135,49 @@ public class Main {
     }
 
     private static void depositBalance() {
+        System.out.println("============================");
         System.out.println("Please choose an account:");
         System.out.println("1. Normal Account");
         System.out.println("2. Savings Account");
         System.out.println("3. Child Account");
-        int input = scanner.nextInt();
-
+        System.out.println("============================");
+        int input  = scanner.nextInt();
         if (input == 1) {
-            if (normalAccount == null) {
+            if (normalAccount != null) {
+                System.out.println("Please enter the amount you want to deposit.");
+                int amount = scanner.nextInt();
+                normalAccount.deposit(amount);
+                System.out.println(amount + " has been deposit into your account");
+                checkInput();
+            } else {
                 System.out.println("You have not created a normal account yet!");
                 checkInput();
             }
-            System.out.println("Please enter the amount you want to deposit.");
-            int amount = input;
-            normalAccount.deposit(amount);
-            System.out.println(amount + " has been deposit into your account");
-            checkInput();
         }
         if (input == 2) {
-            if (savingAccount == null) {
+            if (savingAccount != null) {
+                System.out.println("Please enter the amount you want to deposit.");
+                int amount = scanner.nextInt();
+                savingAccount.deposit(amount);
+                System.out.println(amount + " has been deposit into your account");
+                checkInput();
+            } else {
                 System.out.println("You have not created an saving account yet!");
                 checkInput();
             }
-            System.out.println("Please enter the amount you want to deposit.");
-            int amount = input;
-            savingAccount.deposit(amount);
-            System.out.println(amount + " has been deposit into your account");
-            checkInput();
+
         }
         if (input == 3) {
-            if (childAccount == null) {
+            if (childAccount != null) {
+                System.out.println("Please enter the amount you want to deposit.");
+                int amount = scanner.nextInt();
+                childAccount.deposit(amount);
+                checkInput();
+            } else {
                 System.out.println("You have not created a child account yet!");
                 checkInput();
             }
-            System.out.println("Please enter the amount you want to deposit.");
-            int amount = input;
-            childAccount.deposit(amount);
-            System.out.println(amount + " has been deposit into your account");
-            checkInput();
+
         } else {
             checkInput();
         }
@@ -137,80 +190,55 @@ public class Main {
         System.out.println("3. Child Account");
         int input = scanner.nextInt();
         if (input == 1) {
-            if (normalAccount == null) {
+            if (normalAccount != null) {
+                System.out.println("Please enter the amount you want to withdraw.");
+                int amount = scanner.nextInt();
+                normalAccount.withdraw(amount);
+                checkInput();
+            } else {
                 System.out.println("You have not created a normal account yet!");
                 checkInput();
             }
-            System.out.println("Please enter the amount you want to deposit.");
-            int amount = input;
-            normalAccount.withdraw(amount);
-            System.out.println(amount + " has been taken off your account");
-            checkInput();
+
         }
         if (input == 2) {
-            if (savingAccount == null) {
+            if (savingAccount != null) {
+                System.out.println("Please enter the amount you want to withdraw.");
+                int amount = scanner.nextInt();
+                savingAccount.withdraw(amount);
+                System.out.println(amount + " has been taken off your account");
+                checkInput();
+            } else {
                 System.out.println("You have not created an saving account yet!");
                 checkInput();
             }
-            System.out.println("Please enter the amount you want to deposit.");
-            int amount = input;
-            savingAccount.withdraw(amount);
-            System.out.println(amount + " has been taken off your account");
-            checkInput();
+
 
         }
         if (input == 3) {
-            if (childAccount == null) {
+            if (childAccount != null) {
+                System.out.println("Please enter the amount you want to withdraw.");
+                int amount = scanner.nextInt();
+                childAccount.withdraw(amount);
+                checkInput();
+            } else {
                 System.out.println("You have not created a child account yet!");
                 checkInput();
             }
-            System.out.println("Please enter the amount you want to deposit.");
-            int amount = input;
-            childAccount.withdraw(amount);
-            System.out.println(amount + " has been taken off your account");
-            checkInput();
+
         } else {
             checkInput();
         }
     }
 
-    private static void createAccount() {
-        System.out.print("Please enter your name: ");
-        String name = scanner.next();
-        System.out.print("\nPlease enter your balance: ");
-        int input = scanner.nextInt();
-
-        System.out.println("\nPlease select the account type");
-        System.out.println("1. Normal Account");
-        System.out.println("2. Saving Account");
-        System.out.println("3. Child Account\n");
-        if (input == 1) {
-            normalAccount = new Account(UUID.randomUUID(), name, input);
-            System.out.println("Account created successfully");
+    private static void calculateInterst(SavingAccount account) {
+        if (savingAccount != null) {
+            double value = ((account.getYears() * account.getBalance()) * account.getInterestRate());
+            System.out.println("Your interests value is: " + value);
             checkInput();
-
-        }
-        if (input == 2) {
-
-            System.out.println("Please enter how many years do you want the interest to continue");
-            savingAccount = new SavingAccount(UUID.randomUUID(), name, input, input);
-            System.out.println("Account created successfully");
-            checkInput();
-
-        }
-        if (input == 3) {
-
-            System.out.println("Please enter the child's name");
-            String child = scanner.next();
-            System.out.println("Please enter the maximum withdraw balance");
-            int maximumWithdraw = input;
-            childAccount = new ChildAccount(UUID.randomUUID(), name, child, input, maximumWithdraw);
-            System.out.println("Account created successfully");
-            checkInput();
-
         } else {
+            System.out.println("You have not created an saving account yet!");
             checkInput();
         }
-
     }
 }

@@ -42,7 +42,7 @@ public class SavingAccount implements IAccount {
     @Override
     public int withdraw(int amount) {
         if (amount > 5 && balance > amount) {
-            return balance = -amount;
+            return balance -=amount;
         } else {
             System.out.println("Invalid amount");
             return balance;
@@ -52,14 +52,16 @@ public class SavingAccount implements IAccount {
     @Override
     public int deposit(int amount) {
         if (amount > 5 && balance > amount) {
-            return balance = +amount;
+            return balance +=amount;
         } else {
             System.out.println("Invalid amount");
             return balance;
         }
     }
-
-    public double calculateInterest() {
-        return years * balance * interestRate;
+    public double getInterestRate(){
+        return interestRate;
+    }
+    public int getYears(){
+        return years;
     }
 }

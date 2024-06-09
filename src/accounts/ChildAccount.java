@@ -1,3 +1,7 @@
+package accounts;
+
+import interfaces.IAccount;
+
 import java.util.UUID;
 
 public class ChildAccount implements IAccount {

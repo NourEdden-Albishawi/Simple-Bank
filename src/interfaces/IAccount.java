@@ -1,3 +1,5 @@
+package interfaces;
+
 import java.util.UUID;
 
 public interface IAccount {
@@ -9,5 +11,6 @@ public interface IAccount {
     int getBalance();
     int withdraw(int amount);
     int deposit(int amount);
+
 
 }

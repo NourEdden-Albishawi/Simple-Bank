@@ -88,11 +88,11 @@ public class ChildAccount implements IAccount {
     public void deposit(int amount) {
         if (amount >= 5) {
             JOptionPane.showMessageDialog(new DepositPanel(null, null),
-                    "Withdrawal successful.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    "Deposit successed.", "Success", JOptionPane.INFORMATION_MESSAGE);
             balance += amount;
         } else {
             JOptionPane.showMessageDialog(new DepositPanel(null, null),
-                    "You cannot withdraw less than 5$", "Failed", JOptionPane.ERROR_MESSAGE);
+                    "You cannot deposit less than 5$", "Failed", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
